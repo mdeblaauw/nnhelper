@@ -1,0 +1,13 @@
+*.zip
+*.pyc
+*.ckpt
+*.pt
+
+.ipynb_checkpoints
+
+.DS_Store
+.DS_Store?
+
+venv
+.vscode/
+.python-version
