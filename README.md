@@ -23,6 +23,10 @@ In the MakeFile you can run the tests:
 
 `make test`
 
+To only install the `nnhelper` package into your Python environment you can do this:
+
+`pip install git+https://github.com/mdeblaauw/nnhelper.git`
+
 ## An example of how to use this package
 
 ## Add additional functionality
