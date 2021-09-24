@@ -2,9 +2,8 @@ import unittest
 import pandas as pd
 import torch
 import numpy as np
-import nnhelper as nnhelper
+import nnhelper
 import nnhelper.callbacks as callbacks
-from test.integration.dataset import Dataset
 from test.integration.n_beats import NBeatsNet
 
 
@@ -45,10 +44,8 @@ class TestNnhelper(unittest.TestCase):
         x_train, y_train = x_train / norm_constant, y_train / norm_constant
         x_test, y_test = x_test / norm_constant, y_test / norm_constant
 
-        dataset = Dataset(x=x_train, y=y_train)
-
         self.data_loader = torch.utils.data.DataLoader(
-            dataset=dataset,
+            dataset=nnhelper.Dataset(x=x_train, y=y_train),
             batch_size=self.batch_size
         )
 

@@ -29,6 +29,52 @@ To only install the `nnhelper` package into your Python environment you can do t
 
 ## An example of how to use this package
 
+```python
+import math
+import torch
+import pandas as pd
+import nnhelper
+import nnhelper.callbacks as callbacks
+
+# Create Tensors to hold input and outputs.
+x = torch.linspace(-math.pi, math.pi, 2000)
+y = torch.sin(x)
+
+p = torch.tensor([1, 2, 3])
+xx = x.unsqueeze(-1).pow(p)
+
+# Only 1 sample. Hence, batch size of 1.
+data_loader = torch.utils.data.DataLoader(
+    dataset=nnhelper.Dataset(x=x_train, y=y_train),
+    batch_size=1
+)
+
+model = torch.nn.Sequential(
+    torch.nn.Linear(3, 1),
+    torch.nn.Flatten(0, 1)
+)
+
+loss_fn = torch.nn.MSELoss()
+
+optimizer = torch.optim.Adam(
+    params=model.parameters(),
+    lr=1e-2
+)
+
+# Train the model with 10 epochs and use
+# Verbose Logger to put metrics to terminal.
+nnhelper.fit(
+    model=model,
+    data_loader=data_loader,
+    epochs=10,
+    loss_fn=loss_fn,
+    optimizer=optimizer,
+    callbacks=[
+        callbacks.VerboseLogger()
+    ]
+)
+```
+
 ## Add additional functionality
 
 ## FAQ
