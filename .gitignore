@@ -9,7 +9,6 @@
 .DS_Store?
 
 venv
-.vscode/
 .python-version
 
 .coverage

@@ -1,4 +1,3 @@
-import torch
 from .base_callback import Callback
 
 
@@ -10,8 +9,9 @@ class VerboseLogger(Callback):
         """[summary]
 
         Args:
-            log_interval (int, optional): If verbose is 2, then this sets the number of
-                images after which the training loss is logged. Defaults to 1.
+            log_interval (int, optional): If verbose is 2,
+                then this sets the number of images after
+                which the training loss is logged. Defaults to 1.
         """
         self.batch_iterations = 0
         self.log_interval = log_interval

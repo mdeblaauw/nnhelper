@@ -72,7 +72,8 @@ def fit(
         device (str, optional): Whether training is done on cpu or gpu.
             Defaults to 'cpu'.
         start_epoch (int, optional): Where to start training. This is usefull
-            when training needs to resume from a certain epoch point. Defaults to 1.
+            when training needs to resume from a certain epoch point.
+            Defaults to 1.
     """
     num_batches = len(data_loader)
 

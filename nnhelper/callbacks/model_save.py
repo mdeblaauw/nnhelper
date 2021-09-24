@@ -16,10 +16,14 @@ class SaveAsPytorch(Callback):
         """[summary]
 
         Args:
-            path (str): Path + filename to store the Pytorch model. E.g., `<path>/model.pt`.
-            alternative_model ([type], optional): [description]. Defaults to None.
-            save_every_epoch (bool, optional): [description]. Defaults to False.
-            batch_iterations (int, optional): [description]. Defaults to 0.
+            path (str): Path + filename to store the Pytorch model.
+                E.g., `<path>/model.pt`.
+            alternative_model ([type], optional): [description].
+                Defaults to None.
+            save_every_epoch (bool, optional): [description].
+                Defaults to False.
+            batch_iterations (int, optional): [description].
+                Defaults to 0.
         """
         self.batch_iterations = batch_iterations
         self.path = path
@@ -54,7 +58,8 @@ class SaveAsPytorch(Callback):
                         'epoch': epoch,
                         'batch_iterations': self.batch_iterations,
                         'model_state_dict': self.model.state_dict(),
-                        'optimizer_state_dict': self.params['optimizer'].state_dict(),
+                        'optimizer_state_dict': self.params['optimizer'].
+                        state_dict(),
                     },
                     f'{self.path}_checkpoint_epoch={epoch}.pth'
                 )

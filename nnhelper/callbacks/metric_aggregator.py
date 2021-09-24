@@ -1,4 +1,3 @@
-import torch
 from .base_callback import Callback
 
 

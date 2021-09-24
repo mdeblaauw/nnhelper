@@ -23,13 +23,17 @@ class NBeatsNet(nn.Module):
             blocks_per_stack (int): The number of blocks per stack.
             forecast_length (int): The number of timesteps to forecast.
             backcast_length (int): The number of history timestaps to use.
-            thetas_dim (Tuple[int, int]): The output length of the fully connected
-                layer in every block, which is called the theta dimension in the paper.
-            hidden_layer_units (int): The number of hidden neurons in the first four
-                fully connected layers in a stack.
+            thetas_dim (Tuple[int, int]): The output length of the
+                fully connected layer in every block, which is called the
+                theta dimension in the paper.
+            hidden_layer_units (int): The number of hidden neurons in the
+                first four fully connected layers in a stack.
         """
         assert len(thetas_dim) == number_of_stacks, \
-            'The thetas_dim variable must have length equal to number_of_stacks'
+            (
+                'The thetas_dim variable must have',
+                ' length equal to number_of_stacks'
+            )
         super().__init__()
         self.number_of_stacks = number_of_stacks
         self.blocks_per_stack = blocks_per_stack
@@ -56,7 +60,7 @@ class NBeatsNet(nn.Module):
                 theta_dim=theta_dim,
                 backcast_length=self.backcast_length,
                 forecast_length=self.forecast_length
-            ) for 
+            ) for
             block_number, theta_dim in
             zip(range(self.blocks_per_stack), self.thetas_dim)
         ])
@@ -76,7 +80,7 @@ class NBeatsNet(nn.Module):
                 b, f = block(x)
                 x = x - b
                 forecast = forecast + f
-        return forecast    
+        return forecast
 
 
 class NBeatsBlock(nn.Module):

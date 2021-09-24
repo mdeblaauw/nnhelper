@@ -1,4 +1,5 @@
 from __future__ import annotations
+import torch
 from typing import List, Dict, Any
 
 
@@ -18,7 +19,7 @@ class CallbackList:
         for callback in self.callbacks:
             callback.set_params(params)
 
-    def set_model(self, model: 'torch.nn.Module'):
+    def set_model(self, model: torch.nn.Module):
         for callback in self.callbacks:
             callback.set_model(model)
 

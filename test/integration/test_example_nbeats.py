@@ -1,4 +1,3 @@
-import os
 import unittest
 import pandas as pd
 import torch
@@ -12,18 +11,25 @@ from test.integration.n_beats import NBeatsNet
 class TestNnhelper(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        milk_data = pd.read_csv('test/data/milk.csv', index_col=0, parse_dates=True)
+        milk_data = pd.read_csv(
+            'test/data/milk.csv',
+            index_col=0,
+            parse_dates=True
+        )
         cls.milk = milk_data.values.flatten()
-    
+
     def setUp(self):
-        self.epochs=10
+        self.epochs = 10
         self.forecast_length = 3
         self.backcast_length = 3 * self.forecast_length
         self.batch_size = 10
 
         # data backcast/forecast generation.
         x, y = [], []
-        for self.epoch in range(self.backcast_length, len(self.milk) - self.forecast_length):
+        for self.epoch in range(
+            self.backcast_length,
+            len(self.milk) - self.forecast_length
+        ):
             x.append(self.milk[self.epoch - self.backcast_length:self.epoch])
             y.append(self.milk[self.epoch:self.epoch + self.forecast_length])
         x = np.array(x)
