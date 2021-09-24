@@ -18,7 +18,7 @@ class TestNnhelper(unittest.TestCase):
         cls.milk = milk_data.values.flatten()
 
     def setUp(self):
-        self.epochs = 10
+        self.epochs = 2
         self.forecast_length = 3
         self.backcast_length = 3 * self.forecast_length
         self.batch_size = 10

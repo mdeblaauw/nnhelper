@@ -32,7 +32,6 @@ To only install the `nnhelper` package into your Python environment you can do t
 ```python
 import math
 import torch
-import pandas as pd
 import nnhelper
 import nnhelper.callbacks as callbacks
 
@@ -45,7 +44,7 @@ xx = x.unsqueeze(-1).pow(p)
 
 # Only 1 sample. Hence, batch size of 1.
 data_loader = torch.utils.data.DataLoader(
-    dataset=nnhelper.Dataset(x=x_train, y=y_train),
+    dataset=nnhelper.Dataset(x=xx, y=y),
     batch_size=1
 )
 
