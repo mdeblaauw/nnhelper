@@ -1,7 +1,43 @@
 import torch
-from typing import Callable
+from typing import Callable, Dict, List
 from .callbacks.base_callback import CallbackList, Callback
 from .callbacks.metric_aggregator import MetricAggregator
+
+
+def standard_fit_function(
+    model: torch.nn.Module,
+    input_batch: torch.Tensor,
+    loss_fn: torch.nn.Module,
+    optimizer: torch.optim.Optimizer
+) -> Dict[str, float]:
+    """A function to facilitate the forward and
+    backward pass.
+
+    Args:
+        model (torch.nn.Module): The model to train.
+        input_batch (torch.Tensor): The training data.
+        loss_fn (torch.nn.Module): The loss function.
+        optimizer (torch.optim.Optimizer): The optimizer.
+
+    Returns:
+        Dict[str, float]: A dictionary with the loss.
+    """
+    model.train()
+    optimizer.zero_grad()
+
+    pred = model(input_batch[0])
+
+    losses = loss_fn(input_batch[1], pred)
+
+    if(isinstance(losses, torch.Tensor)):
+        losses = {
+            'loss': losses
+        }
+
+    losses['loss'].backward()
+    optimizer.step()
+
+    return losses
 
 
 def fit(
@@ -12,27 +48,31 @@ def fit(
     optimizer: torch.optim.Optimizer,
     fit_function: Callable = standard_fit_function,
     callbacks: Callback = None,
-    metrics=[],
+    metrics: List[str] = ['loss'],
     verbose: int = 1,
     device: str = 'cpu',
     start_epoch: int = 1
 ):
-    """[summary]
+    """Fits the model on the training data and calls callbacks during
+    training in different phases.
 
     Args:
-        model ([type]): [description]
-        fit_function ([type]): [description]
-        data_loader ([type]): [description]
-        epochs (int): [description]
-        loss_fn ([type]): [description]
-        optimizer ([type]): [description]
-        callbacks ([type], optional): [description]. Defaults to None.
-        metrics (list, optional): [description]. Defaults to [].
+        model (torch.nn.Module): The model that should be trained.
+        data_loader (torch.utils.data.DataLoader): The training data.
+        epochs (int): The number of passes through the training data.
+        loss_fn (torch.nn.Module): The loss function.
+        optimizer (torch.optim.Optimizer): The optimizer.
+        fit_function (Callable, optional): Function that defines how to train
+            the model. Defaults to standard_fit_function.
+        callbacks (Callback, optional): Which functions to call at the start
+            or end of every batch and epoch. Defaults to None.
+        metrics (List[str], optional): Which metrics that should
+            be tracked. Defaults to ['loss].
         verbose (int, optional): [description]. Defaults to 1.
-        device (str, optional): [description]. Defaults to 'cpu'.
-        start_epoch (int, optional): from where to start epochs.
-            This is normally only necessary when to restart from
-            a checkpoint. Defaults to 1.
+        device (str, optional): Whether training is done on cpu or gpu.
+            Defaults to 'cpu'.
+        start_epoch (int, optional): Where to start training. This is usefull
+            when training needs to resume from a certain epoch point. Defaults to 1.
     """
     num_batches = len(data_loader)
 
@@ -83,33 +123,3 @@ def fit(
 
     # run on train end
     callbacks.on_train_end()
-
-
-def standard_fit_function(
-    model: torch.nn.Module,
-    input_batch: torch.Tensor,
-    loss_fn: torch.nn.Module,
-    optimizer: torch.optim.Optimizer
-) -> Dict[str, float]:
-    """[summary]
-
-    Args:
-        model (torch.nn.Module): [description]
-        input_batch (torch.Tensor): [description]
-        loss_fn (torch.nn.Module): [description]
-        optimizer (torch.optim.Optimizer): [description]
-
-    Returns:
-        Dict[str, float]: [description]
-    """
-    model.train()
-    optimizer.zero_grad()
-
-    pred = model(input_batch[0])
-
-    losses = loss_fn(input_batch[1], pred)
-
-    losses['loss'].backward()
-    optimizer.step()
-
-    return losses
