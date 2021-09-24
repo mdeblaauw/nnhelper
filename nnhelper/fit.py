@@ -48,7 +48,7 @@ def fit(
     optimizer: torch.optim.Optimizer,
     fit_function: Callable = standard_fit_function,
     callbacks: Callback = None,
-    metrics: List[str] = ['loss'],
+    metrics: List[str] = [],
     verbose: int = 1,
     device: str = 'cpu',
     start_epoch: int = 1
@@ -67,7 +67,7 @@ def fit(
         callbacks (Callback, optional): Which functions to call at the start
             or end of every batch and epoch. Defaults to None.
         metrics (List[str], optional): Which metrics that should
-            be tracked. Defaults to ['loss].
+            be tracked. Defaults to [].
         verbose (int, optional): [description]. Defaults to 1.
         device (str, optional): Whether training is done on cpu or gpu.
             Defaults to 'cpu'.

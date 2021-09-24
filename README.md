@@ -75,5 +75,6 @@ nnhelper.fit(
 ```
 
 ## Add additional functionality
+There is a large versatility in neural network architectures. It could therefore occur that the `Dataset` function, `fit function`, or `loss` function is not able to meet your architecture requirements. This package is created so that you can easily add more complex functionalities and bring them along in the `nnhelper.fit` function.
 
 ## FAQ

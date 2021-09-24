@@ -9,7 +9,6 @@ class TestReadmeExample(unittest.TestCase):
     def test_running_readme_example(self):
         # Create Tensors to hold input and outputs.
         x = torch.linspace(-math.pi, math.pi, 100)
-        print(x)
         y = torch.sin(x)
 
         p = torch.tensor([1, 2, 3])
