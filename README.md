@@ -11,11 +11,13 @@ What else can you find in this readme:
 * FAQ.
 
 ## Install and test the package
-This package is tested and developed with Python 3.9. So, make sure you have Python3 installed.
+This package is tested and developed with Python 3.9. So, make sure you have Python3 installed and version 3.9 or higher.
 
 Create a virual Python environment:
 
 `python3 -m venv venv`
+
+`source venv/bin/activate`
 
 In the MakeFile you can run the tests:
 
